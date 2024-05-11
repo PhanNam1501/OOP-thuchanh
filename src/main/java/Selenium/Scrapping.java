@@ -42,19 +42,29 @@ public class Scrapping {
 
             // Create a list to store the article data
             List<Article> articleList = new ArrayList<>();
-
+            
             // Iterate through the articles and extract the required data
             for (Element article : articles) {
-                String title = article.selectFirst("a").attr("href");
-                String time = article.select(".article__title").text();
-                String enroll_link = article.select("a.article__badge").text();
+                String enroll_link = article.selectFirst("a").attr("href");
+                String title = article.select(".article__title").text();
+                Document doc = Jsoup.connect(enroll_link).get();
+                String author = doc.select(".author-title").text();
+                Elements dateSectionDiv = doc.select("div.fs-14.date-section");
+                String time = dateSectionDiv.select("time").attr("datetime");
+                Element tagBoxDiv = doc.selectFirst("div.article-tag-box");
+                if (tagBoxDiv != null) {
+	                String tag = tagBoxDiv.select("a").text(); 
+	                Article newArticle = new Article(enroll_link,title, author, time, tag);
+	                articleList.add(newArticle);
+                }
+                else {
+	                Article newArticle = new Article(enroll_link,title, author, time);
+	                articleList.add(newArticle);
+                }
                 
-
-                // Create a new Article object and add it to the list)
-                Article newArticle = new Article(title, time, enroll_link);
-                articleList.add(newArticle);
-              
+               
             }
+         
 
             // Write data to CSV file
             File csvFile = new File("article.csv");
@@ -66,7 +76,9 @@ public class Scrapping {
                 List<String> row1 = new ArrayList<>();
                 row1.add("\"" + "Link" + "\"");
                 row1.add("\"" + "Title" + "\"");
-                row1.add("\"" + "Badge" + "\"");
+                row1.add("\"" + "Author" + "\"");
+                row1.add("\"" + "Time" + "\"");
+                row1.add("\"" + "Tag" + "\"");
                 printWriter.println(String.join(",", row1));
 
                 // iterating over all quotes
@@ -77,14 +89,19 @@ public class Scrapping {
 
                     // wrapping each field with between quotes
                     // to make the CSV file more consistent
-                    System.out.println(quote.getTitle());
-                    System.out.println(quote.getTime());
                     System.out.println(quote.getEnrollLink());
+                    System.out.println(quote.getTitle());
+                    System.out.println(quote.getAuthor());
+                    System.out.println(quote.getTime());
+                    System.out.println(quote.getTag());
+                   
                  
-                    
-                    row.add("\"" + quote.getTitle() + "\"");
-                    row.add("\"" +quote.getTime() + "\"");
                     row.add("\"" +quote.getEnrollLink() + "\"");
+                    row.add("\"" + quote.getTitle() + "\"");
+                    row.add("\"" +quote.getAuthor() + "\"");
+                    row.add("\"" +quote.getTime() + "\"");
+                    row.add("\"" +quote.getTag() + "\"");
+                    
 
                     // printing a CSV line
                     printWriter.println(String.join(",", row));
@@ -99,29 +116,47 @@ public class Scrapping {
     // Create a class to store the article data
     static class Article {
         private String title;
-        private String time;
-
         private String enroll_link;
+        private String author;
+        private String time;
+        private String tag;
 
-        public Article(String title, String time, String enroll_link) {
+        public Article(String enroll_link,String title,  String author, String time, String tag) {
             this.title = title;
-            this.time = time;
 
             this.enroll_link = enroll_link;
+            this.author = author;
+            this.time = time;
+            this.tag = tag;
+        }
+        public Article(String enroll_link,String title,  String author, String time) {
+            this.title = title;
+
+            this.enroll_link = enroll_link;
+            this.author = author;
+            this.time = time;
+            
         }
 
         public String getTitle() {
             return title;
         }
 
-        public String getTime() {
-            return time;
-        }
 
 
 
         public String getEnrollLink() {
             return enroll_link;
+        }
+        
+        public String getAuthor() {
+        	return author;
+        }
+        public String getTime() {
+        	return time;
+        }
+        public String getTag() {
+        	return tag;
         }
     }
 

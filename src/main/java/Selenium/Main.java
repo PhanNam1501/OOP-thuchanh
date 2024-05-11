@@ -22,15 +22,10 @@ public class Main {
         try {
             // Tìm phần tử nút "Read More"
         	JavascriptExecutor js = (JavascriptExecutor) driver;
-        	for (int i = 0 ; i < 20 ;i++) {
+        	for (int i = 0 ; i < 3 ;i++) {
 	            js.executeScript("document.querySelector('.button-more').click();");
 	            Thread.sleep(5000);
         	}
-
-            // Chờ cho đến khi một phần tử mới xuất hiện trên trang web (ví dụ: phần tử có class là "new-element")
-            // Code chờ ở đây
-
-            // Lấy HTML của trang web sau khi đã bấm nút "Read More" và trang web đã được cập nhật
             String html = driver.getPageSource();
 
             // Ghi HTML vào tệp tin văn bản (txt)
