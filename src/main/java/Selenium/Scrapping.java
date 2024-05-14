@@ -70,7 +70,7 @@ public class Scrapping {
             File csvFile = new File("article.csv");
             // using the try-with-resources to handle the
             // release of the unused resources when the writing process ends
-            try (PrintWriter printWriter = new PrintWriter(csvFile, StandardCharsets.UTF_8)) {
+            try (PrintWriter printWriter = new PrintWriter(csvFile, "UTF-8")) {
                 // to handle BOM
                 printWriter.write('\ufeff');
                 List<String> row1 = new ArrayList<>();
