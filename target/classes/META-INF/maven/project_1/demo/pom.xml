@@ -28,6 +28,12 @@
         </repository>
     </repositories>
   <dependencies>
+	
+	<dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>bson</artifactId>
+        <version>4.3.4</version>
+    </dependency>
 	<dependency>
 	    <groupId>org.slf4j</groupId>
 	    <artifactId>slf4j-simple</artifactId>
