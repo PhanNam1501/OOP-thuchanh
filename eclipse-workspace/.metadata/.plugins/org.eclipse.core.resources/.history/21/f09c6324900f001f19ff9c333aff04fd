@@ -1,0 +1,21 @@
+package Selenium;
+import com.mongodb.*;
+
+public class MongoDb {
+    public static void main(String[] args) {
+    	try {
+    		MongoClient mongo1 = new MongoClient("localhost", 27017);
+    		DB db1 = mongo1.getDB("wecommit");
+    		DBCollection coll = db1.createCollection("Student", null);
+    		
+    		BasicDBObject d1 = new BasicDBObject();
+    		BasicDBObject d2 = new BasicDBObject();
+    		
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    		
+    }
+
+}

@@ -1,0 +1,29 @@
+package Selenium;
+import com.mongodb.*;
+
+public class MongoDb {
+    public static void main(String[] args) {
+    	try {
+    		@SuppressWarnings("resource")
+			MongoClient mongo1 = new MongoClient("14.232.206.190/32", 27017);
+    		System.out.println("1");
+    		@SuppressWarnings("deprecation")
+			DB db1 = mongo1.getDB("wecommit");
+    		System.out.println("1");
+    		DBCollection coll = db1.createCollection("Student", null);
+    		System.out.println("1");
+    		BasicDBObject d1 = new BasicDBObject("Name", "Monika").append("RollNo", "1");
+    		System.out.println("1");
+    		BasicDBObject d2 = new BasicDBObject("Name", "Rithvik").append("RollNo", "2");
+    		System.out.println("1");
+    		coll.insert(d1);
+    		coll.insert(d2);
+    		
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    		
+    }
+
+}

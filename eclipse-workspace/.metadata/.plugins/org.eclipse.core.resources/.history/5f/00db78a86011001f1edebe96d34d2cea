@@ -1,0 +1,78 @@
+package Selenium;
+import org.bson.Document;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoException;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.BasicDBObject;
+import org.bson.types.ObjectId;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.FindIterable;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.ConnectionString;
+import org.bson.conversions.Bson;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCursor;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Pattern;
+
+
+
+public class GetContent {
+	public static Document getDocumentByFieldName(String id) {
+		 String connectionString = "mongodb+srv://tuannamle256:k3lGLGcBHFvYgto9@phannam.t93kh0q.mongodb.net/?retryWrites=true&w=majority&appName=PhanNam";
+         MongoClientSettings settings = MongoClientSettings.builder()
+                 .applyConnectionString(new ConnectionString(connectionString))
+                 .build();
+        try (MongoClient mongoClient = MongoClients.create(settings)) {
+            MongoDatabase database = mongoClient.getDatabase("data");
+            MongoCollection<Document> collection = database.getCollection("mycollection");
+            Bson filter = Filters.eq("_id", new ObjectId(id));
+            FindIterable<Document> documents = collection.find(filter);
+            for (Document document : documents) {
+            	System.out.println("Done1");
+                System.out.println(document.toJson());
+            }
+            
+            FindIterable<Document> iterDoc = collection.find(filter);
+    		int i = 1;
+    		// Getting the iterator
+    		Iterator it = iterDoc.iterator();
+    		while (it.hasNext()) {
+    			System.out.println(it.next());
+    			i++;
+    		}
+    		Pattern regex = Pattern.compile("nam", Pattern.CASE_INSENSITIVE);
+            Bson get = Filters.regex("fieldName", regex);
+            FindIterable<Document> doc = collection.find(get);
+            for (Document doc1 : documents) {
+                ObjectId id1 = doc1.getObjectId("_id");
+                System.out.println("Found document with id: " + id1);
+            }
+            
+            FindIterable<Document> document1 = collection.find();
+            for (Document doc2 : document1) {
+            	String content = ((Document) doc).getString("Content");
+            	System.out.println(content);
+            }
+            
+        } catch (MongoException e) {
+            e.printStackTrace();
+        }
+		return null;
+	}
+
+    public static void main(String[] args) {
+    	getDocumentByFieldName("66423d729dfe9929e1343204");
+    	System.out.println("Done4");
+    }
+
+}

@@ -1,0 +1,22 @@
+package Selenium;
+import com.mongodb.DB; 
+import com.mongodb.DBCollection; 
+import com.mongodb.MongoClient; //including essential libraries 
+
+public class MongoDb { 
+
+	public static void main(String[] args) throws Exception 
+	{ 
+		// throwing an exception 
+		try { 
+			MongoClient mongoClient = new MongoClient("localhost",27017); // establishing a server connection in localhost 
+			DB db = mongoClient.getDB("student"); // creating database called student 
+			System.out.println("connection established"); // prints connection established if database created 
+			DBCollection coll = db.getCollection("student"); 
+		} 
+		catch (Exception e) { 
+			System.out.println("error"); // if the exception occurs prints error 
+		} 
+		System.out.println("server ready"); // if there is no exception prints server ready 
+	} 
+}

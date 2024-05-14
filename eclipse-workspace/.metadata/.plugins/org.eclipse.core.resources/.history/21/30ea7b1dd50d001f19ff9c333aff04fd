@@ -1,0 +1,39 @@
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        // Khởi tạo WebDriver
+        WebDriver driver = new ChromeDriver();
+
+        // Mở trang web
+        driver.get("https://cryptonews.com/?s=blockchain");
+
+        try {
+            // Sử dụng JavaScript để bấm vào nút "Read More"
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("document.querySelector('.button-more').click();");
+
+            // Chờ cho đến khi một phần tử mới xuất hiện trên trang web (ví dụ: phần tử có class là "new-element")
+            // Code chờ ở đây
+
+            // Lấy HTML của trang web sau khi đã bấm nút "Read More" và trang web đã được cập nhật
+            String html = driver.getPageSource();
+
+            // Ghi HTML vào tệp tin văn bản (txt)
+            try (FileWriter writer = new FileWriter("output.html")) {
+                writer.write(html);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } finally {
+            // Đóng trình duyệt sau khi đã hoàn thành
+            driver.quit();
+        }
+    }
+}

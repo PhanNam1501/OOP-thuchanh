@@ -1,0 +1,39 @@
+package Selenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Main {
+    public static void main(String[] args) {
+        // Khởi tạo WebDriver
+        WebDriver driver = new ChromeDriver();
+
+        // Mở trang web
+        driver.get("https://cryptonews.com/?s=blockchain");
+
+        try {
+            // Tìm phần tử nút "Read More" bằng class name
+            WebElement readMoreButton = driver.findElement(By.className(".button-more button-more--gradient load-more-button"));
+
+            // Bấm vào nút "Read More"
+            readMoreButton.click();
+
+            // Đợi một khoảng thời gian để trang web tải lại
+            Thread.sleep(2000); // Thay số 2000 bằng thời gian tải trang của trang web của bạn
+
+            // Lấy HTML sau khi đã bấm nút "Read More"
+            String html = driver.getPageSource();
+
+            // Tiếp tục xử lý HTML để trích xuất dữ liệu bằng JSoup
+            // Đoạn mã JSoup ở đây
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            // Đóng trình duyệt sau khi đã hoàn thành
+            driver.quit();
+        }
+    }
+}
+

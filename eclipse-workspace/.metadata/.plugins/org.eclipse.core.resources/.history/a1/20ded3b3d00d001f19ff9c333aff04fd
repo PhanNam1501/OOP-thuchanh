@@ -1,0 +1,39 @@
+package Selenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import java.util.concurrent.TimeUnit;
+
+public class Main {
+    public static void main(String[] args) {
+    	WebDriver driver = new ChromeDriver();
+
+        // adding implicit wait of 15 secs
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+
+        // URL launch 
+        driver.get("https://www.tutorialspoint.com/selenium/practice/text-box.php");
+
+        // get browser title after browser launch
+        System.out.println("Getting the Current URL: " + driver.getCurrentUrl());
+        WebElement e = driver.findElement(By.xpath("//*[@id='fullname']"));
+        e.sendKeys("Selenium");
+        
+        // Get the value entered
+        String text = e.getAttribute("value");
+        System.out.println("Entered text is: " + text);
+
+        // clear the text entered
+        e.clear();
+
+        // Get no text after clearing text
+        String text1 = e.getAttribute("value");
+        System.out.println("Get text after clearing: " + text1);
+
+        // Closing browser
+        //driver.quit();
+    }
+}
+

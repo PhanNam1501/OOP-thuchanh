@@ -1,0 +1,23 @@
+package Selenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import java.util.concurrent.TimeUnit;
+
+public class Main {
+    public static void main(String[] args) {
+    	WebDriver driver = new ChromeDriver();
+
+        // adding implicit wait of 15 secs
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+
+        // URL launch 
+        driver.get("https://www.tutorialspoint.com/selenium/practice/text-box.php");
+
+        // get browser title after browser launch
+        System.out.println("Browser title: " + driver.getTitle());
+    }
+}
+

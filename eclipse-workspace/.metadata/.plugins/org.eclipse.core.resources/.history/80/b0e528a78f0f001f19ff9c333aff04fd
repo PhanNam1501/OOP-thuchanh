@@ -1,0 +1,11 @@
+package Selenium;
+import com.mongodb.*;
+
+public class MongoDb {
+    public static void main(String[] args) {
+    	try {
+    		MongoClient mongo1 = new MongoClient("localhost", 27017);
+    		
+    	}
+    }
+}
