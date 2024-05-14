@@ -100,6 +100,7 @@ public class Scrapping {
             e.printStackTrace();
         }
     }
+    
 
     static class Article {
         private String title;
@@ -144,3 +145,5 @@ public class Scrapping {
         }
     }
 }
+    
+
